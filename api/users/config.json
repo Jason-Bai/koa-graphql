@@ -1,0 +1,9 @@
+{
+  "name": "users",
+  "description": "user account resource",
+  "routes": {
+    "GET /users": "all",
+    "GET /users/:id": "show",
+    "POST /users": "create"
+  }
+}

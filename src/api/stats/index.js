@@ -8,7 +8,7 @@ const stats = {
  * GET all stats.
  */
 
-exports.all = function (ctx){
+exports.all = function(ctx) {
   ctx.body = stats;
 };
 
@@ -16,6 +16,6 @@ exports.all = function (ctx){
  * GET a single stat.
  */
 
-exports.get = function (ctx){
+exports.get = function(ctx) {
   ctx.body = stats[ctx.params.name];
 };

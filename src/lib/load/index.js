@@ -1,10 +1,13 @@
 const Resource = require('koa-resource-router');
 const debug = require('debug')('api');
-const path = require('path');
-const fs = require('fs');
-const join = path.resolve;
-const readdir = fs.readdirSync;
 const Router = require('koa-router');
+const U = require('../utils');
+
+const join = U.path.resolve;
+const readdir = U.fs.readdirSync;
+
+/* eslint security/detect-non-literal-fs-filename: 0 */
+/* eslint security/detect-non-literal-require: 0 */
 
 // global router
 const router = new Router();
@@ -24,12 +27,13 @@ const router = new Router();
  * @api private
  */
 
-module.exports = function(root){
-  readdir(root).forEach(function(file){
+module.exports = function(root) {
+  readdir(root).forEach(file => {
     const dir = join(root, file);
-    const stats = fs.lstatSync(dir);
+    const stats = U.fs.lstatSync(dir);
     if (stats.isDirectory()) {
-      const conf = require(dir + '/config.json');
+      const conf = require(`${dir}/config.json`);
+
       conf.name = file;
       conf.directory = dir;
       if (conf.routes) route(conf);
@@ -40,6 +44,8 @@ module.exports = function(root){
   return router;
 };
 
+/* eslint security/detect-object-injection: 0 */
+
 /**
  * Define routes in `conf`.
  */
@@ -49,14 +55,14 @@ function route(conf) {
 
   const mod = require(conf.directory);
 
-  for (var key in conf.routes) {
+  for (let key in conf.routes) {
     const prop = conf.routes[key];
     const method = key.split(' ')[0];
     const path = key.split(' ')[1];
     debug('%s %s -> .%s', method, path, prop);
 
     const fn = mod[prop];
-    if (!fn) throw new Error(conf.name + ': exports.' + prop + ' is not defined');
+    if (!fn) throw new Error(`${conf.name}: exports. ${prop} is not defined`);
 
     let fns = fn;
 
@@ -75,7 +81,7 @@ function route(conf) {
  */
 
 function resource(conf) {
-  if (!conf.name) throw new Error('.name in ' + conf.directory + '/config.json is required');
+  if (!conf.name) throw new Error(`.name in ${conf.directory}/config.json is required`);
   debug('resource: %s', conf.name);
 
   const mod = require(conf.directory);

@@ -31,7 +31,7 @@ function api(opts) {
   const app = new Koa();
 
   // logging
-  if ('test' != env) app.use(logger());
+  if ('test' !== env) app.use(logger());
 
   // x-response-time
   app.use(responseTime());
@@ -47,12 +47,12 @@ function api(opts) {
   }));
 
   // boot
-  const router = load(__dirname + '/api');
+  const router = load(`${__dirname}/api`);
 
   // routing
   app
-  .use(router.routes())
-  .use(router.allowedMethods());
+    .use(router.routes())
+    .use(router.allowedMethods());
 
   return app;
 }

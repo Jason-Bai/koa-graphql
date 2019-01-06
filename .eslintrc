@@ -1,0 +1,12 @@
+{
+    "env": {
+        "node": true,
+    },
+    "plugins": [
+        "security"
+    ],
+    "extends": [
+        "koa",
+        "plugin:security/recommended"
+    ]
+}

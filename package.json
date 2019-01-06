@@ -4,8 +4,22 @@
   "repository": "koajs/api-boilerplate",
   "description": "Koa API boilerplate application",
   "scripts": {
-    "start": "./src/bin/api",
-    "test": "export NODE_ENV=test && mocha --require should --reporter spec --harmony --bail --exit src/api/*/test.js"
+    "start": "npm run eslint && ./src/bin/api",
+    "test": "NODE_ENV=test jest --forceExit --verbose",
+    "test:unit": "npm test -- test/unit",
+    "test:integration": "npm test -- test/integration",
+    "test:watch": "npm test -- --watch",
+    "test:watch:unit": "npm run test:unit -- --watch",
+    "test:watch:integration": "npm run test:integration -- --watch",
+    "test:coverage": "npm test -- --coverage",
+    "test:coverage:unit": "npm run test:unit -- --coverage",
+    "test:coverage:integration": "npm run test:integration -- --coverage",
+    "lint": "eslint src test",
+    "lint:src": "eslint src",
+    "lint:test": "eslint test"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "keywords": [
     "koa",
@@ -26,9 +40,16 @@
     "redis": "~2.8.0"
   },
   "devDependencies": {
-    "mocha": "*",
-    "should": "*",
-    "supertest": "~3.3.0"
+    "eslint": "^5.12.0",
+    "eslint-config-koa": "^2.0.2",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^23.6.0",
+    "supertest": "^3.3.0"
   },
   "license": "MIT"
 }

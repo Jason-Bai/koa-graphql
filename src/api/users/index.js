@@ -29,33 +29,26 @@ const users = {
  * GET all users.
  */
 exports.all = [
-  function (ctx, next) {
-    console.log('do nothing');
-    next();
-  },
-  function (ctx) {
-    ctx.body = users;
+  function(ctx) {
+    ctx.body = Object.keys(users);
   }
 ];
-
 
 /**
  * GET user by :name.
  */
-
-exports.show = function (ctx) {
-  ctx.body = users[ctx.params.id];
+exports.show = function(ctx) {
+  ctx.body = Object.keys(users[ctx.params.id]);
 };
 
 /**
  * POST a new user.
  */
 
-exports.create = async function (ctx){
-  var body = await parse(ctx);
+exports.create = async function(ctx) {
+  const body = await parse(ctx);
   if (!body.name) this.throw(400, '.name required');
   users[body.name] = body;
   ctx.status = 201;
   ctx.body = 'added!';
 };
-

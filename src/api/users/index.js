@@ -1,16 +1,11 @@
-
-/**
- * Module dependencies.
- */
-
-var parse = require('co-body');
+const parse = require('co-body');
 
 /**
  * This file illustrates using resourceful
  * routing using the koa-router module.
  */
 
-var users = {
+const users = {
   tobi: {
     name: 'tobi',
     age: 3,

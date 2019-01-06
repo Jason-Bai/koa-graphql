@@ -1,4 +1,3 @@
-
 var request = require('supertest');
 var api = require('../..');
 

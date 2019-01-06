@@ -1,11 +1,4 @@
-
-/**
- * This file illustrates how you may map
- * single routes using config.json instead
- * of resource-based routing.
- */
-
-var stats = {
+const stats = {
   requests: 100000,
   average_duration: 52,
   uptime: 123123132

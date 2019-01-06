@@ -1,18 +1,13 @@
-
-/**
- * Module dependencies.
- */
-
-var Resource = require('koa-resource-router');
-var debug = require('debug')('api');
-var path = require('path');
-var fs = require('fs');
-var join = path.resolve;
-var readdir = fs.readdirSync;
-var Router = require('koa-router');
+const Resource = require('koa-resource-router');
+const debug = require('debug')('api');
+const path = require('path');
+const fs = require('fs');
+const join = path.resolve;
+const readdir = fs.readdirSync;
+const Router = require('koa-router');
 
 // global router
-var router = new Router();
+const router = new Router();
 
 /**
  * Load resources in `root` directory.
@@ -31,10 +26,10 @@ var router = new Router();
 
 module.exports = function(root){
   readdir(root).forEach(function(file){
-    var dir = join(root, file);
-    var stats = fs.lstatSync(dir);
+    const dir = join(root, file);
+    const stats = fs.lstatSync(dir);
     if (stats.isDirectory()) {
-      var conf = require(dir + '/config.json');
+      const conf = require(dir + '/config.json');
       conf.name = file;
       conf.directory = dir;
       if (conf.routes) route(conf);
@@ -52,24 +47,24 @@ module.exports = function(root){
 function route(conf) {
   debug('routes: %s', conf.name);
 
-  var mod = require(conf.directory);
+  const mod = require(conf.directory);
 
   for (var key in conf.routes) {
-    var prop = conf.routes[key];
-    var method = key.split(' ')[0];
-    var path = key.split(' ')[1];
+    const prop = conf.routes[key];
+    const method = key.split(' ')[0];
+    const path = key.split(' ')[1];
     debug('%s %s -> .%s', method, path, prop);
 
-    var fn = mod[prop];
+    const fn = mod[prop];
     if (!fn) throw new Error(conf.name + ': exports.' + prop + ' is not defined');
 
-    var fns = fn;
+    let fns = fn;
 
     if (typeof fn === 'function' && !Array.isArray(fn)) {
       fns = [fn];
     }
 
-    var args = [path].concat(fns);
+    const args = [path].concat(fns);
 
     router[method.toLowerCase()].apply(router, args);
   }
@@ -83,7 +78,7 @@ function resource(conf) {
   if (!conf.name) throw new Error('.name in ' + conf.directory + '/config.json is required');
   debug('resource: %s', conf.name);
 
-  var mod = require(conf.directory);
-  
+  const mod = require(conf.directory);
+
   router.use(Resource(conf.name, mod).middleware());
 }

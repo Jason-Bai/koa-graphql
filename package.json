@@ -4,7 +4,8 @@
   "repository": "koajs/api-boilerplate",
   "description": "Koa API boilerplate application",
   "scripts": {
-    "start": "./bin/api"
+    "start": "./src/bin/api",
+    "test": "export NODE_ENV=test && mocha --require should --reporter spec --harmony --bail src/api/*/test.js"
   },
   "keywords": [
     "koa",

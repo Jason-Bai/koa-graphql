@@ -1,11 +1,7 @@
 #!/usr/bin/env node
 
-/**
- * Module dependencies.
- */
-
-var program = require('commander');
-var api = require('..');
+const program = require('commander');
+const api = require('..');
 
 // options
 
@@ -19,7 +15,7 @@ program
 
 // create app
 
-var app = api({
+const app = api({
   ratelimit: ~~program.ratelimit,
   duration: ~~program.ratelimitDuration
 });

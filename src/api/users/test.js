@@ -1,10 +1,9 @@
-
-var request = require('supertest');
-var api = require('../..');
+const request = require('supertest');
+const api = require('../..');
 
 describe('GET /users', function(){
   it('should respond with users', function(done){
-    var app = api();
+    const app = api();
 
     request(app.listen())
     .get('/users')
@@ -15,7 +14,7 @@ describe('GET /users', function(){
     });
   })
   it('should respond with users/:id', function(done){
-    var app = api();
+    const app = api();
 
     request(app.listen())
     .get('/users/jane')

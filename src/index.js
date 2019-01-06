@@ -1,21 +1,16 @@
-
-/**
- * Module dependencies.
- */
-
-var responseTime = require('koa-response-time');
-var ratelimit = require('koa-ratelimit');
-var compress = require('koa-compress');
-var logger = require('koa-logger');
-var load = require('./lib/load');
-var redis = require('redis');
-var Koa = require('koa');
+const responseTime = require('koa-response-time');
+const ratelimit = require('koa-ratelimit');
+const compress = require('koa-compress');
+const logger = require('koa-logger');
+const load = require('./lib/load');
+const redis = require('redis');
+const Koa = require('koa');
 
 /**
  * Environment.
  */
 
-var env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'development';
 
 /**
  * Expose `api()`.
@@ -33,23 +28,18 @@ module.exports = api;
 
 function api(opts) {
   opts = opts || {};
-  var app = new Koa();
+  const app = new Koa();
 
   // logging
-
   if ('test' != env) app.use(logger());
 
   // x-response-time
-
   app.use(responseTime());
 
   // compression
-
   app.use(compress());
 
   // rate limiting
-
-  
   app.use(ratelimit({
     max: opts.ratelimit,
     duration: opts.duration,
@@ -57,8 +47,7 @@ function api(opts) {
   }));
 
   // boot
-
-  var router = load(__dirname + '/api');
+  const router = load(__dirname + '/api');
 
   // routing
   app
